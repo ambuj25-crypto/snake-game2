@@ -24,6 +24,7 @@ time.innerText=timer;
 
 let timeinterval=null;
 let intervalid=null;
+let speed = 250;
 
 // playbtn.classList.add("Play-btn");
 // playbtn.innerText="play";
@@ -95,6 +96,14 @@ for(let segment of snake){
             Highscore=Score;
             localStorage.setItem("Highscores",Highscore.toString());
         }
+        if(Score % 50 === 0){
+    speed -= 30;
+
+    if(speed < 50) speed = 50; // minimum limit
+
+    clearInterval(intervalid);
+    intervalid = setInterval(render, speed);
+}
     }
         
     snake.forEach(val=>{
@@ -108,13 +117,15 @@ for(let segment of snake){
 
    
 }
-    
+   
+
 
 startbtn.addEventListener("click",()=>{
     modal.style.display="none";
     // modal.style.pointerEvents = "none";
 
-    intervalid=setInterval(()=>{render()},250)
+    // intervalid=setInterval(()=>{render()},250)
+    intervalid=setInterval(render, speed);
     timeinterval=setInterval(()=>{
         let [min,sec]=timer.split(":").map(Number);
          if(sec==59){
@@ -147,7 +158,10 @@ function restartgame(){
     snake[0]={x:1,y:3};
     direction="down";
     food={x:Math.floor(Math.random()*rows),y:Math.floor(Math.random()*cols)};
-    intervalid=setInterval(()=>{render()},250)
+    speed = 250;   // reset speed
+clearInterval(intervalid);
+intervalid = setInterval(render, speed);
+
 
 }
 
