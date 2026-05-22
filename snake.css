@@ -1,129 +1,534 @@
-*{
-     margin:0;
-     padding:0;
-     box-sizing:border-box;
+/* ============================================================
+   SNAKE GAME — REALISTIC CSS
+   Only CSS changes; HTML & JS untouched.
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,body{
-    height:100%;
-    width:100%;
-}
-:root{
-    --bg-primary-color:#333131;
-     --fill-col:rgb(148, 214, 132);
-     --food:rgb(174, 61, 61);
-     --bg-modal:rgba(62, 62, 62, 0.57);
-    --text-primary-color:rgb(182, 178, 178);
-    --spacing-xs:4x;
-    --spacing-s:8px;
-    --spacing-m:16px;
-    --spacing-l:24px;
-    --spacing-xl:32px;
-    --spacing-xxl:40px;
-    --border-b-c:rgb(253, 241, 241);
-    --border-r-xs:1px;
-    --border-r-s:4px;
-    --border-r-m:8px;
-    --border-r-l:16px;
-    --border-r-xl:20px;
-    --font:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-    
-
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
-html{
-    background-color:var(--bg-primary-color);
-    color:var(--text-primary-color);
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+:root {
+    /* Palette */
+    --bg-primary-color:    #0b1a0b;
+    --fill-col:            #4caf50;
+    --fill-col-dark:       #2e7d32;
+    --fill-col-light:      #81c784;
+    --food:                #e53935;
+    --bg-modal:            rgba(0, 0, 0, 0.82);
+    --text-primary-color:  #e8f5e9;
+    --text-accent:         #a5d6a7;
+
+    /* Spacing */
+    --spacing-xs:  4px;
+    --spacing-s:   8px;
+    --spacing-m:   16px;
+    --spacing-l:   24px;
+    --spacing-xl:  32px;
+    --spacing-xxl: 40px;
+
+    /* Border */
+    --border-b-c:  rgba(76, 175, 80, 0.35);
+    --border-r-xs: 1px;
+    --border-r-s:  4px;
+    --border-r-m:  8px;
+    --border-r-l:  16px;
+    --border-r-xl: 20px;
+
+    /* Font */
+    --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+            'Open Sans', 'Helvetica Neue', sans-serif;
+
+    /* Glows */
+    --glow-green: 0 0 12px rgba(76,175,80,0.65), 0 0 28px rgba(76,175,80,0.3);
+    --glow-red:   0 0 14px rgba(229,57,53,0.8),  0 0 32px rgba(229,57,53,0.45);
 }
-main,section{
-    width:100%;
-    height:100%;
+
+/* ── Background ─────────────────────────────────────────── */
+html {
+    background: radial-gradient(ellipse at 50% 0%,
+                    #1a3a1a 0%,
+                    #0d1f0d 45%,
+                    #050f05 100%);
+    color: var(--text-primary-color);
+    font-family: var(--font);
+    min-height: 100vh;
 }
-section{
-    height:100%;
-    padding:var(--spacing-xxl);
-    justify-content:space-around;
-    align-items:center;
-     display:flex;
-     flex-direction:column;
-     /* gap:var(--spacing-l); */
+
+body {
+    background:
+        radial-gradient(circle at 15% 15%, rgba(76,175,80,0.06) 0%, transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(76,175,80,0.06) 0%, transparent 55%);
 }
-.infos{
-    width:100%;
-    display:flex;
-    justify-content:space-around;
-     gap:var(--spacing-xl);
-    
+
+/* ── Layout ─────────────────────────────────────────────── */
+main, section {
+    width: 100%;
+    height: 100%;
 }
-.info{
-    padding:var(--spacing-s);
-    border:1px solid var(--border-b-c);
-    border-radius:var(--border-r-m);
+
+section {
+    height: 100%;
+    padding: var(--spacing-xxl);
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
-  
- .board{
-    width:100%; 
-    
-    height:85%;
-    aspect-ratio:1 / 1;
-    border:1px solid var(--border-b-c);
-   display:grid;
-   grid-template-columns:repeat(auto-fill,minmax(40px,1fr));
-   grid-template-rows:repeat(auto-fill,minmax(40px,1fr));
 
- }
+/* ── Info Bar ───────────────────────────────────────────── */
+.infos {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: var(--spacing-xl);
+}
 
- .block{
-    /* width:30px;
-    height:30px; */
-   border:1px solid var(--border-b-c);
-   border-radius:40%;
-   /* border-color:rgba(86, 86, 86, 0.593); */
-    border-color:transparent;
-    
-   
+.info {
+    padding: var(--spacing-s) var(--spacing-m);
+    background: linear-gradient(135deg,
+                    rgba(30,60,30,0.85) 0%,
+                    rgba(15,35,15,0.92) 100%);
+    border: 1px solid rgba(76,175,80,0.4);
+    border-radius: var(--border-r-m);
+    box-shadow:
+        0 4px 18px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(76,175,80,0.25),
+        var(--glow-green);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
 
- }
- .fill{
-  background-color:var(--fill-col);
- }
- .food{
-  background-color:var(--food);
- }
+/* shimmer sweep across info cards */
+.info::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -120%;
+    width: 80%; height: 100%;
+    background: linear-gradient(90deg,
+                    transparent,
+                    rgba(76,175,80,0.12),
+                    transparent);
+    animation: infoShimmer 4s ease-in-out infinite;
+    pointer-events: none;
+}
 
- .modal{
-    height:100vh;
-    width:100vw;
-    position:fixed;
-    top:0;
-    background-color:var(--bg-modal);
-    backdrop-filter:blur(4px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:var(--font);
+.info h3 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-accent);
+    text-shadow: 0 0 8px rgba(76,175,80,0.5);
+    white-space: nowrap;
+}
 
- }
- .modal .startgame, .gameover{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:var(--spacing-m);
- }
- .gameover{
-    display:none;
- }
+.info h3 span {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(76,175,80,0.9);
+}
 
- .btn{
-    padding:var(--spacing-s) var(--spacing-m);
-   border:none;
-   border-radius:var(--border-r-m);
-   cursor:pointer;
-   transition:all 0.3s ease;
+/* ── Game Board ─────────────────────────────────────────── */
+.board {
+    width: 100%;
+    height: 85%;
+    aspect-ratio: 1 / 1;
 
- }
- .btn:hover{
-    transform:scale(1.1);
- }
-  
+    /* subtle grass-grid texture */
+    background-color: #122012;
+    background-image:
+        linear-gradient(rgba(76,175,80,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76,175,80,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    border: 2px solid rgba(76,175,80,0.45);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    grid-template-rows:    repeat(auto-fill, minmax(40px, 1fr));
+
+    box-shadow:
+        0 0 0 1px rgba(76,175,80,0.15),
+        0 0 40px rgba(0,0,0,0.6),
+        0 0 80px rgba(0,0,0,0.35),
+        inset 0 0 40px rgba(0,0,0,0.35);
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* vignette overlay */
+.board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+                    transparent 55%,
+                    rgba(0,0,0,0.5) 100%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* ── Grid Block (empty cell) ────────────────────────────── */
+.block {
+    border: none;
+    border-radius: 40%;
+    position: relative;
+}
+
+/* ── Snake Segment ──────────────────────────────────────── */
+.fill {
+    background: linear-gradient(145deg,
+                    #76c442 0%,
+                    #4caf50 30%,
+                    #388e3c 65%,
+                    #2e7d32 100%);
+    border-radius: 32%;
+    position: relative;
+    z-index: 2;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.55),
+        inset 0 2px 3px rgba(255,255,255,0.28),
+        inset 0 -2px 3px rgba(0,0,0,0.35),
+        0 0 10px rgba(76,175,80,0.45);
+
+    /* scale-pattern overlay via repeating gradient */
+    background-image:
+        radial-gradient(ellipse at 30% 30%,
+            rgba(255,255,255,0.22) 0%,
+            transparent 55%),
+        linear-gradient(145deg,
+            #76c442 0%,
+            #4caf50 30%,
+            #388e3c 65%,
+            #2e7d32 100%);
+
+    animation: segmentPop 0.18s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* specular highlight dot */
+.fill::before {
+    content: '';
+    position: absolute;
+    top: 12%; left: 14%;
+    width: 32%; height: 26%;
+    background: radial-gradient(ellipse,
+                    rgba(255,255,255,0.55) 0%,
+                    transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* subtle scale-line texture */
+.fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 32%;
+    background: repeating-linear-gradient(
+        135deg,
+        transparent 0px,
+        transparent 5px,
+        rgba(0,0,0,0.06) 5px,
+        rgba(0,0,0,0.06) 6px
+    );
+    pointer-events: none;
+}
+
+/* ── Food (Apple) ───────────────────────────────────────── */
+.food {
+    background:
+        radial-gradient(circle at 38% 32%,
+            #ff7070 0%,
+            #e53935 38%,
+            #b71c1c 80%,
+            #7f0000 100%);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.6),
+        inset 0 3px 5px rgba(255,255,255,0.3),
+        inset 0 -3px 5px rgba(0,0,0,0.4),
+        0 0 18px rgba(229,57,53,0.75),
+        0 0 36px rgba(229,57,53,0.4);
+
+    animation:
+        foodBounce 1.4s ease-in-out infinite,
+        foodGlow   1.4s ease-in-out infinite;
+}
+
+/* specular shine */
+.food::before {
+    content: '';
+    position: absolute;
+    top: 10%; left: 18%;
+    width: 28%; height: 22%;
+    background: radial-gradient(ellipse,
+                    rgba(255,255,255,0.7) 0%,
+                    transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* apple stem */
+.food::after {
+    content: '';
+    position: absolute;
+    top: -14%; left: 44%;
+    width: 12%; height: 22%;
+    background: linear-gradient(to bottom, #388e3c, #2e7d32);
+    border-radius: 3px 3px 2px 2px;
+    transform: rotate(12deg);
+    box-shadow: 0 0 5px rgba(76,175,80,0.6);
+    pointer-events: none;
+}
+
+/* ── Modal Overlay ──────────────────────────────────────── */
+.modal {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    background: radial-gradient(ellipse at center,
+                    rgba(5,20,5,0.88) 0%,
+                    rgba(0,0,0,0.94) 100%);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font);
+    animation: modalFadeIn 0.35s ease-out both;
+}
+
+/* ── Modal Card (shared by startgame & gameover) ────────── */
+.modal .startgame,
+.gameover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-m);
+
+    background: linear-gradient(150deg,
+                    rgba(18,45,18,0.97) 0%,
+                    rgba(8,25,8,0.99)  100%);
+    padding: var(--spacing-xxl) calc(var(--spacing-xxl) * 1.6);
+    border-radius: 18px;
+    border: 1px solid rgba(76,175,80,0.45);
+
+    box-shadow:
+        0 24px 70px rgba(0,0,0,0.7),
+        0 0  50px rgba(76,175,80,0.12),
+        inset 0 1px 0 rgba(76,175,80,0.35);
+
+    position: relative;
+    overflow: hidden;
+    animation: cardSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* rotating ambient light ring */
+.modal .startgame::before,
+.gameover::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -60%;
+    width: 220%; height: 220%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(76,175,80,0.06) 60deg,
+        transparent 120deg
+    );
+    animation: rotateBg 10s linear infinite;
+    pointer-events: none;
+}
+
+/* ── Modal Headings ─────────────────────────────────────── */
+.modal .startgame h3 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #c8e6c9, #66bb6a, #a5d6a7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(76,175,80,0.55));
+    animation: titleGlow 2.5s ease-in-out infinite alternate;
+}
+
+.gameover h3 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #ffcdd2, #ef5350, #ff8a80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(229,57,53,0.6));
+    animation: titleGlowRed 2.5s ease-in-out infinite alternate;
+}
+
+.gameover {
+    display: none;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+    padding: var(--spacing-s) var(--spacing-xl);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #fff;
+
+    background: linear-gradient(135deg, #66bb6a 0%, #43a047 50%, #2e7d32 100%);
+    box-shadow:
+        0 6px 22px rgba(76,175,80,0.45),
+        0 2px 5px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.22);
+
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+                box-shadow 0.25s ease;
+    animation: btnPulse 2.2s ease-in-out infinite;
+}
+
+/* shimmer sweep on button */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -110%;
+    width: 80%; height: 100%;
+    background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255,255,255,0.25),
+                    transparent);
+    transition: left 0.55s ease;
+    pointer-events: none;
+}
+
+.btn:hover {
+    transform: scale(1.09) translateY(-3px);
+    box-shadow:
+        0 12px 35px rgba(76,175,80,0.65),
+        0 4px 10px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    background: linear-gradient(135deg, #81c784 0%, #66bb6a 50%, #43a047 100%);
+}
+
+.btn:hover::before {
+    left: 120%;
+}
+
+.btn:active {
+    transform: scale(0.96) translateY(1px);
+    box-shadow:
+        0 3px 12px rgba(76,175,80,0.4),
+        0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+
+/* Food bounce */
+@keyframes foodBounce {
+    0%, 100% { transform: scale(1)    translateY(0); }
+    30%       { transform: scale(1.18) translateY(-3px); }
+    60%       { transform: scale(0.95) translateY(1px); }
+}
+
+/* Food glow pulse */
+@keyframes foodGlow {
+    0%, 100% {
+        box-shadow:
+            0 3px 10px rgba(0,0,0,0.6),
+            inset 0 3px 5px rgba(255,255,255,0.3),
+            0 0 18px rgba(229,57,53,0.75),
+            0 0 36px rgba(229,57,53,0.4);
+    }
+    50% {
+        box-shadow:
+            0 3px 10px rgba(0,0,0,0.6),
+            inset 0 3px 5px rgba(255,255,255,0.3),
+            0 0 28px rgba(229,57,53,1),
+            0 0 55px rgba(229,57,53,0.65),
+            0 0 80px rgba(229,57,53,0.3);
+    }
+}
+
+/* Snake segment pop-in */
+@keyframes segmentPop {
+    from { transform: scale(0.65); opacity: 0.4; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+/* Modal fade-in */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Card slide-in with spring */
+@keyframes cardSlideIn {
+    from { transform: scale(0.65) translateY(40px); opacity: 0; }
+    to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+/* Button glow pulse */
+@keyframes btnPulse {
+    0%, 100% {
+        box-shadow:
+            0 6px 22px rgba(76,175,80,0.45),
+            0 2px 5px rgba(0,0,0,0.35),
+            inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    50% {
+        box-shadow:
+            0 6px 32px rgba(76,175,80,0.75),
+            0 2px 5px rgba(0,0,0,0.35),
+            inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+}
+
+/* Title green glow */
+@keyframes titleGlow {
+    from { filter: drop-shadow(0 0 5px  rgba(76,175,80,0.4)); }
+    to   { filter: drop-shadow(0 0 18px rgba(76,175,80,0.85)); }
+}
+
+/* Title red glow (game over) */
+@keyframes titleGlowRed {
+    from { filter: drop-shadow(0 0 5px  rgba(229,57,53,0.45)); }
+    to   { filter: drop-shadow(0 0 18px rgba(229,57,53,0.9)); }
+}
+
+/* Info card shimmer */
+@keyframes infoShimmer {
+    0%        { left: -120%; }
+    40%, 100% { left:  120%; }
+}
+
+/* Rotating ambient ring in modal card */
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
