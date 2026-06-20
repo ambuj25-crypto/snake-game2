@@ -1,41 +1,10 @@
 
-
-// board.style.touchAction = "none";
-
-// let startX = 0;
-// let startY = 0;
-
-// board.addEventListener("touchstart", (e) => {
-  
-//     startX = e.touches[0].clientX;
-//     startY = e.touches[0].clientY;
-// }, { passive: true });
-
-// board.addEventListener("touchend", (e) => {
-//       console.log("Touch started");
-//     let endX = e.changedTouches[0].clientX;
-//     let endY = e.changedTouches[0].clientY;
-
-//     let diffX = endX - startX;
-//     let diffY = endY - startY;
-
-//     if (Math.abs(diffX) > Math.abs(diffY)) {
-//         if (diffX > 30 && direction !== "left") direction = "right";
-//         else if (diffX < -30 && direction !== "right") direction = "left";
-//     } else {
-//         if (diffY > 30 && direction !== "up") direction = "down";
-//         else if (diffY < -30 && direction !== "down") direction = "up";
-//     }
-// }, { passive: true });
-
-
-
-
 board.style.touchAction = "none";
 
 let startX = 0;
 let startY = 0;
 
+// Use pointerdown/pointerup for reliable cross-device detection
 board.addEventListener("pointerdown", (e) => {
     startX = e.clientX;
     startY = e.clientY;
@@ -48,11 +17,27 @@ board.addEventListener("pointerup", (e) => {
     let diffX = endX - startX;
     let diffY = endY - startY;
 
+    // Require a minimum swipe distance to register
+    if (Math.abs(diffX) < 20 && Math.abs(diffY) < 20) return;
+
     if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 30 && direction !== "left") direction = "right";
-        else if (diffX < -30 && direction !== "right") direction = "left";
+        // Horizontal swipe
+        if (diffX > 0 && direction !== "left")  direction = "right";
+        else if (diffX < 0 && direction !== "right") direction = "left";
     } else {
-        if (diffY > 30 && direction !== "up") direction = "down";
-        else if (diffY < -30 && direction !== "down") direction = "up";
+        // Vertical swipe
+        if (diffY > 0 && direction !== "up")    direction = "down";
+        else if (diffY < 0 && direction !== "down") direction = "up";
     }
+});
+
+// D-pad button controls
+document.querySelectorAll(".dpad-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const dir = btn.dataset.dir;
+        if (dir === "left"  && direction !== "right") direction = "left";
+        if (dir === "right" && direction !== "left")  direction = "right";
+        if (dir === "up"    && direction !== "down")  direction = "up";
+        if (dir === "down"  && direction !== "up")    direction = "down";
+    });
 });

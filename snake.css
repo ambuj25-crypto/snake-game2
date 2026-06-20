@@ -1,6 +1,5 @@
 /* ============================================================
-   SNAKE GAME — REALISTIC CSS
-   Only CSS changes; HTML & JS untouched.
+   SNAKE GAME — RESPONSIVE CSS
    ============================================================ */
 
 * {
@@ -12,6 +11,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 :root {
@@ -68,18 +68,20 @@ body {
 }
 
 /* ── Layout ─────────────────────────────────────────────── */
-main, section {
+main {
     width: 100%;
     height: 100%;
 }
 
 section {
+    width: 100%;
     height: 100%;
-    padding: var(--spacing-xxl);
-    justify-content: space-around;
-    align-items: center;
+    padding: var(--spacing-m);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-m);
 }
 
 /* ── Info Bar ───────────────────────────────────────────── */
@@ -87,7 +89,8 @@ section {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-s);
+    flex-shrink: 0;
 }
 
 .info {
@@ -105,6 +108,8 @@ section {
     position: relative;
     overflow: hidden;
     transition: box-shadow 0.3s ease;
+    flex: 1;
+    text-align: center;
 }
 
 /* shimmer sweep across info cards */
@@ -122,9 +127,9 @@ section {
 }
 
 .info h3 {
-    font-size: 0.78rem;
+    font-size: clamp(0.55rem, 2vw, 0.78rem);
     font-weight: 600;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--text-accent);
     text-shadow: 0 0 8px rgba(76,175,80,0.5);
@@ -133,18 +138,29 @@ section {
 
 .info h3 span {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: clamp(0.75rem, 3vw, 1rem);
     font-weight: 700;
     text-shadow: 0 0 12px rgba(76,175,80,0.9);
 }
 
+/* ── Board Wrapper ──────────────────────────────────────── */
+/* The wrapper takes all available space and centers the board */
+.board-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0; /* allows flex children to shrink */
+}
+
 /* ── Game Board ─────────────────────────────────────────── */
 .board {
-    width: 100%;
-    height: 85%;
-    aspect-ratio: 1 / 1;
+    /* Width/height are set by JS to COLS*blockSize × ROWS*blockSize */
+    max-width: 100%;
+    max-height: 100%;
 
-    /* subtle grass-grid texture */
+    /* subtle grass-grid texture (background-size set by JS) */
     background-color: #122012;
     background-image:
         linear-gradient(rgba(76,175,80,0.07) 1px, transparent 1px),
@@ -154,8 +170,6 @@ section {
     border: 2px solid rgba(76,175,80,0.45);
     border-radius: 4px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-    grid-template-rows:    repeat(auto-fill, minmax(40px, 1fr));
 
     box-shadow:
         0 0 0 1px rgba(76,175,80,0.15),
@@ -165,6 +179,7 @@ section {
 
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 /* vignette overlay */
@@ -296,12 +311,64 @@ section {
     pointer-events: none;
 }
 
+/* ── D-Pad Controls ─────────────────────────────────────── */
+.dpad {
+    display: none; /* hidden on desktop */
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    padding-bottom: var(--spacing-s);
+}
+
+.dpad-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dpad-center {
+    width: 44px;
+    height: 44px;
+}
+
+.dpad-btn {
+    width: 54px;
+    height: 54px;
+    background: linear-gradient(145deg,
+                    rgba(30,60,30,0.95),
+                    rgba(10,30,10,0.95));
+    border: 1px solid rgba(76,175,80,0.55);
+    border-radius: 12px;
+    color: #a5d6a7;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(76,175,80,0.3),
+        var(--glow-green);
+    transition: transform 0.1s ease, background 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.dpad-btn:active {
+    transform: scale(0.9);
+    background: linear-gradient(145deg,
+                    rgba(76,175,80,0.4),
+                    rgba(46,125,50,0.4));
+}
+
 /* ── Modal Overlay ──────────────────────────────────────── */
 .modal {
     height: 100vh;
     width: 100vw;
     position: fixed;
     top: 0;
+    left: 0;
     background: radial-gradient(ellipse at center,
                     rgba(5,20,5,0.88) 0%,
                     rgba(0,0,0,0.94) 100%);
@@ -311,6 +378,7 @@ section {
     align-items: center;
     font-family: var(--font);
     animation: modalFadeIn 0.35s ease-out both;
+    z-index: 10;
 }
 
 /* ── Modal Card (shared by startgame & gameover) ────────── */
@@ -336,6 +404,7 @@ section {
     position: relative;
     overflow: hidden;
     animation: cardSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    max-width: 90vw;
 }
 
 /* rotating ambient light ring */
@@ -357,7 +426,7 @@ section {
 
 /* ── Modal Headings ─────────────────────────────────────── */
 .modal .startgame h3 {
-    font-size: 1.9rem;
+    font-size: clamp(1.2rem, 5vw, 1.9rem);
     font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
@@ -367,10 +436,11 @@ section {
     background-clip: text;
     filter: drop-shadow(0 0 10px rgba(76,175,80,0.55));
     animation: titleGlow 2.5s ease-in-out infinite alternate;
+    text-align: center;
 }
 
 .gameover h3 {
-    font-size: 1.9rem;
+    font-size: clamp(1.2rem, 5vw, 1.9rem);
     font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
@@ -409,6 +479,7 @@ section {
     transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
                 box-shadow 0.25s ease;
     animation: btnPulse 2.2s ease-in-out infinite;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* shimmer sweep on button */
@@ -443,6 +514,49 @@ section {
     box-shadow:
         0 3px 12px rgba(76,175,80,0.4),
         0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Show D-pad on touch / small screens */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+    section {
+        padding: var(--spacing-s);
+        gap: var(--spacing-s);
+        justify-content: space-between;
+    }
+
+    .dpad {
+        display: flex;
+    }
+
+    .board-wrapper {
+        flex: 1;
+    }
+
+    .info {
+        padding: var(--spacing-xs) var(--spacing-s);
+    }
+
+    .modal .startgame,
+    .gameover {
+        padding: var(--spacing-xl) var(--spacing-xl);
+    }
+}
+
+/* Very small phones (iPhone SE etc.) */
+@media (max-width: 380px) {
+    .dpad-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 1.1rem;
+    }
+    .dpad-center {
+        width: 36px;
+        height: 36px;
+    }
 }
 
 /* ============================================================

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SNAKE GAME</title>
     <link rel="stylesheet" href="snake.css">
 </head>
@@ -11,27 +11,38 @@
         <section>
             <div class="infos">
                 <div class="info">
-                    <h3>high score:
+                    <h3>High Score:
                     <span class="High-score">0</span></h3>
                 </div>
             
                 <div class="info">
-                    <h3>score:
+                    <h3>Score:
                     <span class="Score">0</span></h3>
                 </div>
            
-                
                 <div class="info">
                     <h3>Time:
                     <span class="timer">00:00</span></h3>
                 </div>
             </div>
-            <div class="board">
+            <div class="board-wrapper">
+                <div class="board"></div>
+            </div>
+
+            <!-- D-pad for mobile -->
+            <div class="dpad">
+                <button class="dpad-btn dpad-up"    data-dir="up">▲</button>
+                <div class="dpad-row">
+                    <button class="dpad-btn dpad-left"  data-dir="left">◀</button>
+                    <div class="dpad-center"></div>
+                    <button class="dpad-btn dpad-right" data-dir="right">▶</button>
+                </div>
+                <button class="dpad-btn dpad-down"  data-dir="down">▼</button>
             </div>
         </section>
         <div class="modal">
             <div class="startgame">
-                <h3>Welcome to snake game</h3>
+                <h3>Welcome to Snake Game</h3>
                 <button class="btn startbtn">Start Game</button>
             </div>
              <div class="gameover">
