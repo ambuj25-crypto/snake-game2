@@ -525,7 +525,7 @@ section {
 (hover: none) and (pointer: coarse) {
     section {
         padding: var(--spacing-m);
-        padding-bottom: 30px;
+        padding-bottom: 50px;
         gap: var(--spacing-xs);
         justify-content: flex-start;
     }
