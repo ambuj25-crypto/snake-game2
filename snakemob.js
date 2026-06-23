@@ -1,30 +1,30 @@
 // =============================================================================
-//  snakemob.js — Full-screen invisible swipe controls
+//  snakemob.js — Mobile swipe controls
 // =============================================================================
 //
-//  D-pad buttons are gone. Direction is controlled entirely by swiping
-//  anywhere on the screen with a finger.
+//  FIX SUMMARY:
+//  ─────────────────────────────────────────────────────────────────────────
+//  BEFORE: touchstart + touchend were on `document` with e.preventDefault()
+//  on both. This blocked ALL synthetic click events site-wide, making the
+//  "Start Game" and "Restart" buttons impossible to tap on mobile.
 //
-//  HOW IT WORKS:
-//  ─────────────
-//  • touchstart  → record finger's starting X/Y + timestamp
-//  • touchend    → measure delta; pick the dominant axis; update direction
+//  AFTER (3-listener pattern):
+//  1. touchstart  on BOARD  — record finger position. No preventDefault().
+//  2. touchend    on BOARD  — compute delta, update direction. No preventDefault().
+//  3. touchmove   on BOARD  — ONLY prevents the browser scroll/pull-to-refresh.
 //
-//  WHY document AND NOT board:
-//  ────────────────────────────
-//  Listening on `document` means the player can swipe literally anywhere on
-//  the screen — the board, the info bar, anywhere — and the snake responds.
-//  This is the UX players expect from mobile snake games.
-//
-//  WHY { passive: false } + e.preventDefault():
-//  ─────────────────────────────────────────────
-//  Mobile browsers register touch listeners as "passive" by default, meaning
-//  they will start scrolling/pull-to-refreshing the page BEFORE your JS code
-//  even runs.  { passive: false } opts out of that optimisation so that
-//  e.preventDefault() can actually block the scroll before it begins.
+//  Why this works:
+//  • Gestures are captured on the game board only. UI buttons outside the
+//    board are completely untouched and receive clicks normally.
+//  • touchmove fires while the finger is moving (before touchend), so
+//    preventing it blocks scroll without affecting tap-to-click flow.
+//  • board.style.touchAction = "none" is a CSS-layer hint that tells the
+//    browser not to claim the touch event for its own scroll gesture — this
+//    works together with the touchmove preventDefault as a belt-and-braces
+//    approach for maximum browser compatibility.
 // =============================================================================
 
-// -- Stop the board element from triggering its own native scroll/zoom --------
+// CSS-level hint: browser should not handle touch gestures on the board
 board.style.touchAction = "none";
 
 // -- Touch state --------------------------------------------------------------
@@ -33,48 +33,57 @@ let touchStartY  = 0;
 let touchStartMs = 0;
 
 // =============================================================================
-//  touchstart — record where and when the finger landed
-//  Listener is on `document` → works anywhere on the screen
+//  1. touchstart — record where and when the finger landed
+//     Listener: board only (NOT document)
+//     No e.preventDefault() — allows synthetic click events to fire normally
 // =============================================================================
-document.addEventListener("touchstart", (e) => {
-    // Prevent pull-to-refresh and any other native gesture from starting
-    e.preventDefault();
-
+board.addEventListener("touchstart", (e) => {
+    // No preventDefault() here — removing it lets tap events (clicks) on
+    // any overlapping UI still fire. The modal buttons are outside the board
+    // so this doesn't affect them anyway, but it's correct practice.
     const touch  = e.touches[0];
     touchStartX  = touch.clientX;
     touchStartY  = touch.clientY;
     touchStartMs = Date.now();
-}, { passive: false });   // passive:false is required for preventDefault() to work
+}, { passive: true });   // passive:true is safe here since we don't call preventDefault()
 
 // =============================================================================
-//  touchend — compute delta and decide swipe direction
-//  Listener is on `document` → works anywhere on the screen
+//  2. touchend — compute delta, decide direction
+//     Listener: board only (NOT document)
+//     No e.preventDefault() — tap-to-click is unaffected
 // =============================================================================
-document.addEventListener("touchend", (e) => {
-    // Prevent the 300 ms tap-delay and tap-to-zoom
-    e.preventDefault();
+board.addEventListener("touchend", (e) => {
+    // No preventDefault() — we only need to read coordinates here, not block anything
+    const touch = e.changedTouches[0];   // changedTouches[0] = the finger that lifted
+    const diffX = touch.clientX - touchStartX;
+    const diffY = touch.clientY - touchStartY;
 
-    // changedTouches[0] holds the finger that just lifted
-    // (e.touches[] is empty at this point)
-    const touch = e.changedTouches[0];
-    const diffX = touch.clientX - touchStartX;   // +ve → swiped right
-    const diffY = touch.clientY - touchStartY;   // +ve → swiped down
-
-    // Guard 1: minimum distance (30 px) — ignores taps and micro-jitter
+    // Guard: ignore taps (< 30 px) and slow deliberate drags (> 500 ms)
     const MIN_PX = 30;
+    const MAX_MS = 500;
     if (Math.abs(diffX) < MIN_PX && Math.abs(diffY) < MIN_PX) return;
+    if (Date.now() - touchStartMs > MAX_MS) return;
 
-    // Guard 2: maximum duration (500 ms) — slow presses are not swipes
-    if (Date.now() - touchStartMs > 500) return;
-
-    // Determine dominant axis and update the snake's direction variable
+    // Determine dominant axis and update direction
     if (Math.abs(diffX) > Math.abs(diffY)) {
         // Horizontal swipe
-        if (diffX > 0 && direction !== "left")   direction = "right";
+        if (diffX > 0 && direction !== "left")       direction = "right";
         else if (diffX < 0 && direction !== "right") direction = "left";
     } else {
         // Vertical swipe
-        if (diffY > 0 && direction !== "up")     direction = "down";
+        if (diffY > 0 && direction !== "up")         direction = "down";
         else if (diffY < 0 && direction !== "down")  direction = "up";
     }
-}, { passive: false });   // passive:false is required for preventDefault() to work
+}, { passive: true });   // passive:true is safe here since we don't call preventDefault()
+
+// =============================================================================
+//  3. touchmove — block browser scroll/pull-to-refresh ONLY
+//     Listener: board only
+//     This is the ONLY place e.preventDefault() is called.
+//     touchmove fires while the finger is sliding, which is exactly when
+//     the browser would start scrolling the page. Blocking it here is safe
+//     because touchmove does not participate in the tap-to-click flow.
+// =============================================================================
+board.addEventListener("touchmove", (e) => {
+    e.preventDefault();   // stop page scroll / pull-to-refresh over the board
+}, { passive: false });   // passive:false is REQUIRED for preventDefault() to work
