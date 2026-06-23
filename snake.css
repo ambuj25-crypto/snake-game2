@@ -534,7 +534,7 @@ section {
         flex: 1;
         min-height: 0;
         align-self: stretch;
-        padding: 0 6px 6px 9px;
+        padding: 0 5px 5px 12px;
     }
 
     /*
