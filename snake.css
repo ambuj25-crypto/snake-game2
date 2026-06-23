@@ -78,6 +78,7 @@ section {
     width: 100%;
     height: 100%;
     padding: var(--spacing-m);
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -160,11 +161,14 @@ section {
 .board-wrapper {
     flex: 1;
     display: flex;
-    align-items: stretch;   /* board fills full wrapper height */
+    align-items: stretch;
+    /* board fills full wrapper height */
     justify-content: stretch;
     width: 100%;
-    min-height: 0;           /* lets flex column shrink past content size */
-    padding: 0 8px 8px 8px; /* breathing room: keep grid off raw screen edge */
+    min-height: 0;
+    /* lets flex column shrink past content size */
+    padding: 0 8px 8px 8px;
+    /* breathing room: keep grid off raw screen edge */
 }
 
 /* ── Game Board ───────────────────────────────────────────── */
@@ -182,9 +186,12 @@ section {
  *  than the initial 100% width.)
  */
 .board {
-    flex: 1 1 100%;   /* grow AND shrink to fill the wrapper fully */
-    width:  100%;     /* initial width  — JS overwrites with exact px */
-    height: 100%;     /* initial height — JS overwrites with exact px */
+    flex: 1 1 100%;
+    /* grow AND shrink to fill the wrapper fully */
+    width: 100%;
+    /* initial width  — JS overwrites with exact px */
+    height: 100%;
+    /* initial height — JS overwrites with exact px */
 
     /* subtle grass-grid texture (background-size set by JS) */
     background-color: #122012;
