@@ -8,7 +8,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -16,46 +17,46 @@ html, body {
 
 :root {
     /* Palette */
-    --bg-primary-color:    #0b1a0b;
-    --fill-col:            #4caf50;
-    --fill-col-dark:       #2e7d32;
-    --fill-col-light:      #81c784;
-    --food:                #e53935;
-    --bg-modal:            rgba(0, 0, 0, 0.82);
-    --text-primary-color:  #e8f5e9;
-    --text-accent:         #a5d6a7;
+    --bg-primary-color: #0b1a0b;
+    --fill-col: #4caf50;
+    --fill-col-dark: #2e7d32;
+    --fill-col-light: #81c784;
+    --food: #e53935;
+    --bg-modal: rgba(0, 0, 0, 0.82);
+    --text-primary-color: #e8f5e9;
+    --text-accent: #a5d6a7;
 
     /* Spacing */
-    --spacing-xs:  4px;
-    --spacing-s:   8px;
-    --spacing-m:   16px;
-    --spacing-l:   24px;
-    --spacing-xl:  32px;
+    --spacing-xs: 4px;
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xl: 32px;
     --spacing-xxl: 40px;
 
     /* Border */
-    --border-b-c:  rgba(76, 175, 80, 0.35);
+    --border-b-c: rgba(76, 175, 80, 0.35);
     --border-r-xs: 1px;
-    --border-r-s:  4px;
-    --border-r-m:  8px;
-    --border-r-l:  16px;
+    --border-r-s: 4px;
+    --border-r-m: 8px;
+    --border-r-l: 16px;
     --border-r-xl: 20px;
 
     /* Font */
     --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
-            'Open Sans', 'Helvetica Neue', sans-serif;
+        'Open Sans', 'Helvetica Neue', sans-serif;
 
     /* Glows */
-    --glow-green: 0 0 12px rgba(76,175,80,0.65), 0 0 28px rgba(76,175,80,0.3);
-    --glow-red:   0 0 14px rgba(229,57,53,0.8),  0 0 32px rgba(229,57,53,0.45);
+    --glow-green: 0 0 12px rgba(76, 175, 80, 0.65), 0 0 28px rgba(76, 175, 80, 0.3);
+    --glow-red: 0 0 14px rgba(229, 57, 53, 0.8), 0 0 32px rgba(229, 57, 53, 0.45);
 }
 
 /* ── Background ─────────────────────────────────────────── */
 html {
     background: radial-gradient(ellipse at 50% 0%,
-                    #1a3a1a 0%,
-                    #0d1f0d 45%,
-                    #050f05 100%);
+            #1a3a1a 0%,
+            #0d1f0d 45%,
+            #050f05 100%);
     color: var(--text-primary-color);
     font-family: var(--font);
     min-height: 100vh;
@@ -63,8 +64,8 @@ html {
 
 body {
     background:
-        radial-gradient(circle at 15% 15%, rgba(76,175,80,0.06) 0%, transparent 55%),
-        radial-gradient(circle at 85% 85%, rgba(76,175,80,0.06) 0%, transparent 55%);
+        radial-gradient(circle at 15% 15%, rgba(76, 175, 80, 0.06) 0%, transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(76, 175, 80, 0.06) 0%, transparent 55%);
 }
 
 /* ── Layout ─────────────────────────────────────────────── */
@@ -80,14 +81,15 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: var(--spacing-m);
+    justify-content: space-between;
+    gap: var(--spacing-s);
 }
 
 /* ── Info Bar ───────────────────────────────────────────── */
 .infos {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     gap: var(--spacing-s);
     flex-shrink: 0;
@@ -96,13 +98,13 @@ section {
 .info {
     padding: var(--spacing-s) var(--spacing-m);
     background: linear-gradient(135deg,
-                    rgba(30,60,30,0.85) 0%,
-                    rgba(15,35,15,0.92) 100%);
-    border: 1px solid rgba(76,175,80,0.4);
+            rgba(30, 60, 30, 0.85) 0%,
+            rgba(15, 35, 15, 0.92) 100%);
+    border: 1px solid rgba(76, 175, 80, 0.4);
     border-radius: var(--border-r-m);
     box-shadow:
-        0 4px 18px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(76,175,80,0.25),
+        0 4px 18px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(76, 175, 80, 0.25),
         var(--glow-green);
     backdrop-filter: blur(10px);
     position: relative;
@@ -116,23 +118,26 @@ section {
 .info::before {
     content: '';
     position: absolute;
-    top: 0; left: -120%;
-    width: 80%; height: 100%;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
     background: linear-gradient(90deg,
-                    transparent,
-                    rgba(76,175,80,0.12),
-                    transparent);
+            transparent,
+            rgba(76, 175, 80, 0.12),
+            transparent);
     animation: infoShimmer 4s ease-in-out infinite;
     pointer-events: none;
 }
 
 .info h3 {
+
     font-size: clamp(0.55rem, 2vw, 0.78rem);
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--text-accent);
-    text-shadow: 0 0 8px rgba(76,175,80,0.5);
+    text-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
     white-space: nowrap;
 }
 
@@ -140,46 +145,68 @@ section {
     color: #ffffff;
     font-size: clamp(0.75rem, 3vw, 1rem);
     font-weight: 700;
-    text-shadow: 0 0 12px rgba(76,175,80,0.9);
+    text-shadow: 0 0 12px rgba(76, 175, 80, 0.9);
 }
 
-/* ── Board Wrapper ──────────────────────────────────────── */
-/* The wrapper takes all available space and centers the board */
+/* ── Board Wrapper ─────────────────────────────────────────── */
+/*
+ * flex:1 + min-height:0 makes this wrapper fill ALL remaining vertical
+ * space between the info bar and the screen edge.
+ * align-items:stretch makes the .board child stretch to 100% of the
+ * wrapper height without needing height:100% on the child.
+ * JS reads wrapper.clientWidth / clientHeight (not board) so the
+ * measurement is taken BEFORE JS shrinks the board to integer multiples.
+ */
 .board-wrapper {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;   /* board fills full wrapper height */
+    justify-content: stretch;
     width: 100%;
-    min-height: 0; /* allows flex children to shrink */
+    min-height: 0;           /* lets flex column shrink past content size */
+    padding: 0 8px 8px 8px; /* breathing room: keep grid off raw screen edge */
 }
 
-/* ── Game Board ─────────────────────────────────────────── */
+/* ── Game Board ───────────────────────────────────────────── */
+/*
+ * Initial size: fill the wrapper completely so JS can read
+ * board.clientWidth/clientHeight as the "available pixels".
+ * JS (buildGrid) then sets board.style.width/height to exact
+ * integer multiples of blockSize — the inline style overrides
+ * this class rule (no !important anywhere = inline wins).
+ *
+ * flex-grow:1  — board expands to fill wrapper width on desktop.
+ * flex-shrink:1 — board can shrink if the wrapper is narrower.
+ * (No flex-shrink:0, which was the bug: it prevented the board
+ *  from filling the wrapper after JS set a pixel size smaller
+ *  than the initial 100% width.)
+ */
 .board {
-    /* Width/height are set by JS to COLS*blockSize × ROWS*blockSize */
-    max-width: 100%;
-    max-height: 100%;
+    flex: 1 1 100%;   /* grow AND shrink to fill the wrapper fully */
+    width:  100%;     /* initial width  — JS overwrites with exact px */
+    height: 100%;     /* initial height — JS overwrites with exact px */
 
     /* subtle grass-grid texture (background-size set by JS) */
     background-color: #122012;
     background-image:
-        linear-gradient(rgba(76,175,80,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(76,175,80,0.07) 1px, transparent 1px);
+        linear-gradient(rgba(76, 175, 80, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 175, 80, 0.07) 1px, transparent 1px);
     background-size: 40px 40px;
 
-    border: 2px solid rgba(76,175,80,0.45);
+    border: 2px solid rgba(76, 175, 80, 0.45);
     border-radius: 4px;
     display: grid;
 
     box-shadow:
-        0 0 0 1px rgba(76,175,80,0.15),
-        0 0 40px rgba(0,0,0,0.6),
-        0 0 80px rgba(0,0,0,0.35),
-        inset 0 0 40px rgba(0,0,0,0.35);
+        0 0 0 1px rgba(76, 175, 80, 0.15),
+        0 0 40px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(0, 0, 0, 0.35),
+        inset 0 0 40px rgba(0, 0, 0, 0.35);
 
     position: relative;
     overflow: hidden;
-    flex-shrink: 0;
+    /* flex-shrink:0 intentionally removed — it was preventing the board
+       from filling edge-to-edge after JS snapped it to exact px multiples */
 }
 
 /* vignette overlay */
@@ -188,8 +215,8 @@ section {
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse at center,
-                    transparent 55%,
-                    rgba(0,0,0,0.5) 100%);
+            transparent 55%,
+            rgba(0, 0, 0, 0.5) 100%);
     pointer-events: none;
     z-index: 3;
 }
@@ -204,24 +231,24 @@ section {
 /* ── Snake Segment ──────────────────────────────────────── */
 .fill {
     background: linear-gradient(145deg,
-                    #76c442 0%,
-                    #4caf50 30%,
-                    #388e3c 65%,
-                    #2e7d32 100%);
+            #76c442 0%,
+            #4caf50 30%,
+            #388e3c 65%,
+            #2e7d32 100%);
     border-radius: 32%;
     position: relative;
     z-index: 2;
 
     box-shadow:
-        0 2px 6px rgba(0,0,0,0.55),
-        inset 0 2px 3px rgba(255,255,255,0.28),
-        inset 0 -2px 3px rgba(0,0,0,0.35),
-        0 0 10px rgba(76,175,80,0.45);
+        0 2px 6px rgba(0, 0, 0, 0.55),
+        inset 0 2px 3px rgba(255, 255, 255, 0.28),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(76, 175, 80, 0.45);
 
     /* scale-pattern overlay via repeating gradient */
     background-image:
         radial-gradient(ellipse at 30% 30%,
-            rgba(255,255,255,0.22) 0%,
+            rgba(255, 255, 255, 0.22) 0%,
             transparent 55%),
         linear-gradient(145deg,
             #76c442 0%,
@@ -229,18 +256,20 @@ section {
             #388e3c 65%,
             #2e7d32 100%);
 
-    animation: segmentPop 0.18s cubic-bezier(0.34,1.56,0.64,1) both;
+    animation: segmentPop 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 /* specular highlight dot */
 .fill::before {
     content: '';
     position: absolute;
-    top: 12%; left: 14%;
-    width: 32%; height: 26%;
+    top: 12%;
+    left: 14%;
+    width: 32%;
+    height: 26%;
     background: radial-gradient(ellipse,
-                    rgba(255,255,255,0.55) 0%,
-                    transparent 70%);
+            rgba(255, 255, 255, 0.55) 0%,
+            transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -251,13 +280,11 @@ section {
     position: absolute;
     inset: 0;
     border-radius: 32%;
-    background: repeating-linear-gradient(
-        135deg,
-        transparent 0px,
-        transparent 5px,
-        rgba(0,0,0,0.06) 5px,
-        rgba(0,0,0,0.06) 6px
-    );
+    background: repeating-linear-gradient(135deg,
+            transparent 0px,
+            transparent 5px,
+            rgba(0, 0, 0, 0.06) 5px,
+            rgba(0, 0, 0, 0.06) 6px);
     pointer-events: none;
 }
 
@@ -274,26 +301,28 @@ section {
     z-index: 2;
 
     box-shadow:
-        0 3px 10px rgba(0,0,0,0.6),
-        inset 0 3px 5px rgba(255,255,255,0.3),
-        inset 0 -3px 5px rgba(0,0,0,0.4),
-        0 0 18px rgba(229,57,53,0.75),
-        0 0 36px rgba(229,57,53,0.4);
+        0 3px 10px rgba(0, 0, 0, 0.6),
+        inset 0 3px 5px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.4),
+        0 0 18px rgba(229, 57, 53, 0.75),
+        0 0 36px rgba(229, 57, 53, 0.4);
 
     animation:
         foodBounce 1.4s ease-in-out infinite,
-        foodGlow   1.4s ease-in-out infinite;
+        foodGlow 1.4s ease-in-out infinite;
 }
 
 /* specular shine */
 .food::before {
     content: '';
     position: absolute;
-    top: 10%; left: 18%;
-    width: 28%; height: 22%;
+    top: 10%;
+    left: 18%;
+    width: 28%;
+    height: 22%;
     background: radial-gradient(ellipse,
-                    rgba(255,255,255,0.7) 0%,
-                    transparent 70%);
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -302,64 +331,27 @@ section {
 .food::after {
     content: '';
     position: absolute;
-    top: -14%; left: 44%;
-    width: 12%; height: 22%;
+    top: -14%;
+    left: 44%;
+    width: 12%;
+    height: 22%;
     background: linear-gradient(to bottom, #388e3c, #2e7d32);
     border-radius: 3px 3px 2px 2px;
     transform: rotate(12deg);
-    box-shadow: 0 0 5px rgba(76,175,80,0.6);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
     pointer-events: none;
 }
 
-/* ── D-Pad Controls ─────────────────────────────────────── */
-.dpad {
-    display: none; /* hidden on desktop */
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex-shrink: 0;
-    padding-bottom: var(--spacing-s);
-}
-
-.dpad-row {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.dpad-center {
-    width: 44px;
-    height: 44px;
-}
-
+/* ── D-Pad Controls — REMOVED ───────────────────────────── */
+/*
+ * The D-pad is replaced by full-screen invisible swipe gestures
+ * handled in snakemob.js. All D-pad elements are hidden.
+ */
+.dpad,
+.dpad-row,
+.dpad-center,
 .dpad-btn {
-    width: 54px;
-    height: 54px;
-    background: linear-gradient(145deg,
-                    rgba(30,60,30,0.95),
-                    rgba(10,30,10,0.95));
-    border: 1px solid rgba(76,175,80,0.55);
-    border-radius: 12px;
-    color: #a5d6a7;
-    font-size: 1.4rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-        0 4px 12px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(76,175,80,0.3),
-        var(--glow-green);
-    transition: transform 0.1s ease, background 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
-
-.dpad-btn:active {
-    transform: scale(0.9);
-    background: linear-gradient(145deg,
-                    rgba(76,175,80,0.4),
-                    rgba(46,125,50,0.4));
+    display: none !important;
 }
 
 /* ── Modal Overlay ──────────────────────────────────────── */
@@ -370,8 +362,8 @@ section {
     top: 0;
     left: 0;
     background: radial-gradient(ellipse at center,
-                    rgba(5,20,5,0.88) 0%,
-                    rgba(0,0,0,0.94) 100%);
+            rgba(5, 20, 5, 0.88) 0%,
+            rgba(0, 0, 0, 0.94) 100%);
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
@@ -390,20 +382,20 @@ section {
     gap: var(--spacing-m);
 
     background: linear-gradient(150deg,
-                    rgba(18,45,18,0.97) 0%,
-                    rgba(8,25,8,0.99)  100%);
+            rgba(18, 45, 18, 0.97) 0%,
+            rgba(8, 25, 8, 0.99) 100%);
     padding: var(--spacing-xxl) calc(var(--spacing-xxl) * 1.6);
     border-radius: 18px;
-    border: 1px solid rgba(76,175,80,0.45);
+    border: 1px solid rgba(76, 175, 80, 0.45);
 
     box-shadow:
-        0 24px 70px rgba(0,0,0,0.7),
-        0 0  50px rgba(76,175,80,0.12),
-        inset 0 1px 0 rgba(76,175,80,0.35);
+        0 24px 70px rgba(0, 0, 0, 0.7),
+        0 0 50px rgba(76, 175, 80, 0.12),
+        inset 0 1px 0 rgba(76, 175, 80, 0.35);
 
     position: relative;
     overflow: hidden;
-    animation: cardSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    animation: cardSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     max-width: 90vw;
 }
 
@@ -412,14 +404,14 @@ section {
 .gameover::before {
     content: '';
     position: absolute;
-    top: -60%; left: -60%;
-    width: 220%; height: 220%;
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        rgba(76,175,80,0.06) 60deg,
-        transparent 120deg
-    );
+    top: -60%;
+    left: -60%;
+    width: 220%;
+    height: 220%;
+    background: conic-gradient(from 0deg,
+            transparent 0deg,
+            rgba(76, 175, 80, 0.06) 60deg,
+            transparent 120deg);
     animation: rotateBg 10s linear infinite;
     pointer-events: none;
 }
@@ -434,7 +426,7 @@ section {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 10px rgba(76,175,80,0.55));
+    filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.55));
     animation: titleGlow 2.5s ease-in-out infinite alternate;
     text-align: center;
 }
@@ -448,7 +440,7 @@ section {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 10px rgba(229,57,53,0.6));
+    filter: drop-shadow(0 0 10px rgba(229, 57, 53, 0.6));
     animation: titleGlowRed 2.5s ease-in-out infinite alternate;
 }
 
@@ -470,14 +462,14 @@ section {
 
     background: linear-gradient(135deg, #66bb6a 0%, #43a047 50%, #2e7d32 100%);
     box-shadow:
-        0 6px 22px rgba(76,175,80,0.45),
-        0 2px 5px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.22);
+        0 6px 22px rgba(76, 175, 80, 0.45),
+        0 2px 5px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
 
     position: relative;
     overflow: hidden;
-    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
-                box-shadow 0.25s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease;
     animation: btnPulse 2.2s ease-in-out infinite;
     -webkit-tap-highlight-color: transparent;
 }
@@ -486,12 +478,14 @@ section {
 .btn::before {
     content: '';
     position: absolute;
-    top: 0; left: -110%;
-    width: 80%; height: 100%;
+    top: 0;
+    left: -110%;
+    width: 80%;
+    height: 100%;
     background: linear-gradient(90deg,
-                    transparent,
-                    rgba(255,255,255,0.25),
-                    transparent);
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent);
     transition: left 0.55s ease;
     pointer-events: none;
 }
@@ -499,9 +493,9 @@ section {
 .btn:hover {
     transform: scale(1.09) translateY(-3px);
     box-shadow:
-        0 12px 35px rgba(76,175,80,0.65),
-        0 4px 10px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.3);
+        0 12px 35px rgba(76, 175, 80, 0.65),
+        0 4px 10px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, #81c784 0%, #66bb6a 50%, #43a047 100%);
 }
 
@@ -512,50 +506,85 @@ section {
 .btn:active {
     transform: scale(0.96) translateY(1px);
     box-shadow:
-        0 3px 12px rgba(76,175,80,0.4),
-        0 1px 3px rgba(0,0,0,0.3);
+        0 3px 12px rgba(76, 175, 80, 0.4),
+        0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================================
    RESPONSIVE BREAKPOINTS
    ============================================================ */
 
-/* Show D-pad on touch / small screens */
-@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+/* Mobile / touch screens */
+@media (max-width: 768px),
+(hover: none) and (pointer: coarse) {
     section {
         padding: var(--spacing-s);
-        gap: var(--spacing-s);
-        justify-content: space-between;
+        gap: var(--spacing-xs);
+        justify-content: flex-start;
     }
 
-    .dpad {
-        display: flex;
-    }
-
+    /* Wrapper grows to fill ALL remaining height after info bar */
     .board-wrapper {
         flex: 1;
+        min-height: 0;
+        align-self: stretch;
+        padding: 0 6px 6px 6px;
     }
 
+    /*
+     * FIX 1 — Canvas Grid Gap:
+     * The !important flags have been REMOVED.
+     *
+     * The root cause of the border gap was that CSS `!important` has higher
+     * priority than JS inline styles (board.style.width = exactPx). So even
+     * though buildGrid() computed a perfect multiple of blockSize and set it
+     * as an inline style, the mobile media query's `!important` immediately
+     * reset the board back to `100%` (a non-multiple value), leaving a sliver
+     * of empty space at the right/bottom edge where the snake incorrectly died.
+     *
+     * Without !important, the JS inline style wins (inline > class rule),
+     * so the board is always exactly COLS×blockSize by ROWS×blockSize pixels.
+     */
+    .board {
+        width: 100%;
+        /* initial size so JS can measure clientWidth  */
+        height: 100%;
+        /* initial size so JS can measure clientHeight */
+        /* JS overrides both with exact pixel multiples after measuring */
+    }
+
+    /*
+     * FIX 2 — High Score Text Truncation:
+     * Replaced the too-aggressive font-size:6px / padding:1px with
+     * proportional values that keep text readable on all phone widths.
+     *
+     * - font-size on .info sets a base that the h3 clamp() values inherit
+     *   context from, but the actual text uses clamp() so it stays fluid.
+     * - Tighter padding gives the three cards more room side-by-side.
+     * - min-width:0 lets each card shrink below its content size if needed.
+     * - white-space:nowrap is already on h3, so text won't wrap awkwardly.
+     */
     .info {
-        padding: var(--spacing-xs) var(--spacing-s);
+        padding: 4px 6px;
+        min-width: 0;
+        /* allow cards to shrink in a flex row */
+    }
+
+    .info h3 {
+        font-size: clamp(0.5rem, 2.5vw, 0.7rem);
+        /* label: "HIGH SCORE" */
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+    }
+
+    .info h3 span {
+        font-size: clamp(0.65rem, 3vw, 0.9rem);
+        /* value: "0", "00:00" */
     }
 
     .modal .startgame,
     .gameover {
         padding: var(--spacing-xl) var(--spacing-xl);
-    }
-}
-
-/* Very small phones (iPhone SE etc.) */
-@media (max-width: 380px) {
-    .dpad-btn {
-        width: 46px;
-        height: 46px;
-        font-size: 1.1rem;
-    }
-    .dpad-center {
-        width: 36px;
-        height: 36px;
     }
 }
 
@@ -565,84 +594,140 @@ section {
 
 /* Food bounce */
 @keyframes foodBounce {
-    0%, 100% { transform: scale(1)    translateY(0); }
-    30%       { transform: scale(1.18) translateY(-3px); }
-    60%       { transform: scale(0.95) translateY(1px); }
+
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+    }
+
+    30% {
+        transform: scale(1.18) translateY(-3px);
+    }
+
+    60% {
+        transform: scale(0.95) translateY(1px);
+    }
 }
 
 /* Food glow pulse */
 @keyframes foodGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow:
-            0 3px 10px rgba(0,0,0,0.6),
-            inset 0 3px 5px rgba(255,255,255,0.3),
-            0 0 18px rgba(229,57,53,0.75),
-            0 0 36px rgba(229,57,53,0.4);
+            0 3px 10px rgba(0, 0, 0, 0.6),
+            inset 0 3px 5px rgba(255, 255, 255, 0.3),
+            0 0 18px rgba(229, 57, 53, 0.75),
+            0 0 36px rgba(229, 57, 53, 0.4);
     }
+
     50% {
         box-shadow:
-            0 3px 10px rgba(0,0,0,0.6),
-            inset 0 3px 5px rgba(255,255,255,0.3),
-            0 0 28px rgba(229,57,53,1),
-            0 0 55px rgba(229,57,53,0.65),
-            0 0 80px rgba(229,57,53,0.3);
+            0 3px 10px rgba(0, 0, 0, 0.6),
+            inset 0 3px 5px rgba(255, 255, 255, 0.3),
+            0 0 28px rgba(229, 57, 53, 1),
+            0 0 55px rgba(229, 57, 53, 0.65),
+            0 0 80px rgba(229, 57, 53, 0.3);
     }
 }
 
 /* Snake segment pop-in */
 @keyframes segmentPop {
-    from { transform: scale(0.65); opacity: 0.4; }
-    to   { transform: scale(1);    opacity: 1; }
+    from {
+        transform: scale(0.65);
+        opacity: 0.4;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Modal fade-in */
 @keyframes modalFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Card slide-in with spring */
 @keyframes cardSlideIn {
-    from { transform: scale(0.65) translateY(40px); opacity: 0; }
-    to   { transform: scale(1)    translateY(0);    opacity: 1; }
+    from {
+        transform: scale(0.65) translateY(40px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Button glow pulse */
 @keyframes btnPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow:
-            0 6px 22px rgba(76,175,80,0.45),
-            0 2px 5px rgba(0,0,0,0.35),
-            inset 0 1px 0 rgba(255,255,255,0.22);
+            0 6px 22px rgba(76, 175, 80, 0.45),
+            0 2px 5px rgba(0, 0, 0, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.22);
     }
+
     50% {
         box-shadow:
-            0 6px 32px rgba(76,175,80,0.75),
-            0 2px 5px rgba(0,0,0,0.35),
-            inset 0 1px 0 rgba(255,255,255,0.22);
+            0 6px 32px rgba(76, 175, 80, 0.75),
+            0 2px 5px rgba(0, 0, 0, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.22);
     }
 }
 
 /* Title green glow */
 @keyframes titleGlow {
-    from { filter: drop-shadow(0 0 5px  rgba(76,175,80,0.4)); }
-    to   { filter: drop-shadow(0 0 18px rgba(76,175,80,0.85)); }
+    from {
+        filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.4));
+    }
+
+    to {
+        filter: drop-shadow(0 0 18px rgba(76, 175, 80, 0.85));
+    }
 }
 
 /* Title red glow (game over) */
 @keyframes titleGlowRed {
-    from { filter: drop-shadow(0 0 5px  rgba(229,57,53,0.45)); }
-    to   { filter: drop-shadow(0 0 18px rgba(229,57,53,0.9)); }
+    from {
+        filter: drop-shadow(0 0 5px rgba(229, 57, 53, 0.45));
+    }
+
+    to {
+        filter: drop-shadow(0 0 18px rgba(229, 57, 53, 0.9));
+    }
 }
 
 /* Info card shimmer */
 @keyframes infoShimmer {
-    0%        { left: -120%; }
-    40%, 100% { left:  120%; }
+    0% {
+        left: -120%;
+    }
+
+    40%,
+    100% {
+        left: 120%;
+    }
 }
 
 /* Rotating ambient ring in modal card */
 @keyframes rotateBg {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
